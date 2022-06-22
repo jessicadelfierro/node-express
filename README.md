@@ -30,3 +30,5 @@ __dirname variable is a special variable in node, whenever used, it will refer t
 app.use(express.json()); -- when the server receives requests with json formatted data in the body, this middleware function will handle parsing that json data into javascript properties of the request object so that we can use that data in javascript
 
 after the express server handles the code inside the callback for the app.all method, once it hits the next function it will go to the next relavent routing method. That means if the request that came in was a POST request, then it would go from the app.all method to the app.post method skipping the app.get method since its not a GET request.
+
+campsiteRouter.js module will contain the code for handling the rest api endpoints for campsites and campsite/campsiteId

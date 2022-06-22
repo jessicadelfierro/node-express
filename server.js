@@ -2,6 +2,8 @@
 const express = require('express');
 //require morgan
 const morgan = require('morgan');
+//require campsiteRouter
+const campsiteRouter = require('./routes/campsiteRouter');
 
 //set up hostname variable as localhost, and port
 const hostname = 'localhost';
@@ -13,29 +15,29 @@ const app = express();
 app.use(morgan('dev'));
 app.use(express.json());
 
-//support for rest api endpoints; any http requests to this path will trigger this method
-app.all('/campsites', (req, res, next) => {
+//provide root path for campsiteRouter, that's why we don't need to specify in campsiteRouter.js
+app.use('/campsites', campsiteRouter);
+
+//set up express to serve files from the public folder with the help of express.static can accomplish in a single line
+//single line is all we need to have express serve static files from the public folder
+app.use(express.static(__dirname + '/public'));
+
+//set up server
+app.use((req, res) => {
     res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
-    next(); //pass control of the application routing to the next relevant routing method after this one, otherwise it will just stop here
+    res.setHeader('Content-Type', 'text/html');
+    res.end('<html><body><h1>This is an Express Server</h1></body></html>');
 });
-//set up endpoint for GET request
-app.get('/campsites', (req, res) => {
-    res.end('Will send all the campsites to you');
+
+//start server and start listening to it
+app.listen(port, hostname, () => {
+    console.log(`Server running at http://${hostname}:${port}/`);
 });
-//set up endpoint for POST request
-app.post('/campsites', (req, res) => {
-    res.end(`Will add the campsite: ${req.body.name} with description: ${req.body.description}`);
-});
-//set up endpoint for PUT request
-app.put('/campsites', (req, res) => {
-    res.statusCode = 403; //operation is not supported
-    res.end('PUT operation is not supported on /campsites');
-});
-//set up endpoint for DELETE request
-app.delete('/campsites', (req, res) => {
-    res.end('Deleting all campsites');
-});
+
+
+
+/*
+DELETED --
 
 //route parameter -- allow us to store whatever the client sends as the part of the path after the slash as a route parameter named campsiteId
 app.get('/campsites/:campsiteId', (req, res) => {
@@ -55,18 +57,4 @@ app.delete('/campsites/:campsiteId', (req, res) => {
     res.end(`Deleting campsite: ${req.params.campsiteId}`);
 });
 
-//set up express to serve files from the public folder with the help of express.static can accomplish in a single line
-//single line is all we need to have express serve static files from the public folder
-app.use(express.static(__dirname + '/public'));
-
-//set up server
-app.use((req, res) => {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/html');
-    res.end('<html><body><h1>This is an Express Server</h1></body></html>');
-});
-
-//start server and start listening to it
-app.listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}/`);
-});
+*/

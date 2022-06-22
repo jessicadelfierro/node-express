@@ -16,3 +16,7 @@ set up the server so that it returns the same response with any request, using t
 use method can take a callback function which is a special type of function that express calls a middleware function 
 
 middleware function in express has access to 3 parameters: req(request object), res(response object), next(function)
+
+morgan('dev') configures morgan to log using the development version which will print some additional information to the screen
+
+__dirname variable is a special variable in node, whenever used, it will refer to the absolute path of the current directory of the file that it is in

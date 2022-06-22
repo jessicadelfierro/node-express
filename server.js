@@ -4,6 +4,8 @@ const express = require('express');
 const morgan = require('morgan');
 //require campsiteRouter
 const campsiteRouter = require('./routes/campsiteRouter');
+const promotionRouter = require('./routes/promotionRouter');
+const partnerRouter = require('./routes/partnerRouter');
 
 //set up hostname variable as localhost, and port
 const hostname = 'localhost';
@@ -17,6 +19,8 @@ app.use(express.json());
 
 //provide root path for campsiteRouter, that's why we don't need to specify in campsiteRouter.js
 app.use('/campsites', campsiteRouter);
+app.use('/promotions', promotionRouter);
+app.use('/partners', partnerRouter);
 
 //set up express to serve files from the public folder with the help of express.static can accomplish in a single line
 //single line is all we need to have express serve static files from the public folder
